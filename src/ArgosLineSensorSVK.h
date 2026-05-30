@@ -19,6 +19,7 @@ public:
     void read();
 
     int raw(uint8_t sensor);
+    int mapped(uint8_t sensor);
 
 private:
 

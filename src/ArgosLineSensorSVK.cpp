@@ -57,3 +57,23 @@ int ArgosLineSensorSVK::raw(uint8_t sensor) {
 
     return _raw[sensor];
 }
+
+int ArgosLineSensorSVK::mapped(uint8_t sensor) {
+
+    static const uint8_t mapTable[8] = {
+        5, // N1 = S6
+        0, // N2 = S1
+        1, // N3 = S2
+        4, // N4 = S5
+        2, // N5 = S3
+        6, // N6 = S7
+        7, // N7 = S8
+        3  // N8 = S4
+    };
+
+    if(sensor > 7) {
+        return 0;
+    }
+
+    return _raw[ mapTable[sensor] ];
+}
