@@ -137,3 +137,38 @@ int ArgosLineSensorSVK::maximum(uint8_t sensor) {
 
     return _max[sensor];
 }
+
+int ArgosLineSensorSVK::normalized(uint8_t sensor) {
+
+    if(sensor > 7) {
+
+        return 0;
+    }
+
+    int value = mapped(sensor);
+
+    int minValue = _min[sensor];
+
+    int maxValue = _max[sensor];
+
+    if(maxValue <= minValue) {
+
+        return 0;
+    }
+
+    long normalizedValue =
+        ((long)(value - minValue) * 1000L) /
+        (maxValue - minValue);
+
+    if(normalizedValue < 0) {
+
+        normalizedValue = 0;
+    }
+
+    if(normalizedValue > 1000) {
+
+        normalizedValue = 1000;
+    }
+
+    return (int)normalizedValue;
+}

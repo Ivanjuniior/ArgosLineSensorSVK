@@ -32,6 +32,8 @@ public:
 
     int maximum(uint8_t sensor);
 
+    int normalized(uint8_t sensor);
+
 private:
 
     uint8_t _muxA;
