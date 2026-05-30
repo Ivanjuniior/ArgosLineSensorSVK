@@ -22,10 +22,6 @@ public:
 
     int mapped(uint8_t sensor);
 
-    // ==========================
-    // V0.3
-    // ==========================
-
     void calibrate(uint32_t duration = 5000);
 
     int minimum(uint8_t sensor);
@@ -33,6 +29,8 @@ public:
     int maximum(uint8_t sensor);
 
     int normalized(uint8_t sensor);
+
+    long position();
 
 private:
 
@@ -43,12 +41,10 @@ private:
 
     int _raw[8];
 
-    // ==========================
-    // V0.3
-    // ==========================
-
     int _min[8];
     int _max[8];
+
+    long _lastPosition;
 
     void selectSensor(uint8_t channel);
 };

@@ -10,6 +10,8 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
 
         _max[i] = 0;
     }
+
+    _lastPosition = 3500;
 }
 
 void ArgosLineSensorSVK::begin(
@@ -171,4 +173,31 @@ int ArgosLineSensorSVK::normalized(uint8_t sensor) {
     }
 
     return (int)normalizedValue;
+}
+
+long ArgosLineSensorSVK::position() {
+
+    long weightedSum = 0;
+
+    long total = 0;
+
+    for(int i = 0; i < 8; i++) {
+
+        int value = normalized(i);
+
+        weightedSum += (long)value * (i * 1000);
+
+        total += value;
+    }
+
+    if(total < 50) {
+
+        return _lastPosition;
+    }
+
+    long pos = weightedSum / total;
+
+    _lastPosition = pos;
+
+    return pos;
 }
