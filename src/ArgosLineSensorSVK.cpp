@@ -5,6 +5,10 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
     for(int i = 0; i < 8; i++) {
 
         _raw[i] = 0;
+
+        _min[i] = 4095;
+
+        _max[i] = 0;
     }
 }
 
@@ -61,6 +65,7 @@ int ArgosLineSensorSVK::raw(uint8_t sensor) {
 int ArgosLineSensorSVK::mapped(uint8_t sensor) {
 
     static const uint8_t mapTable[8] = {
+
         5, // N1 = S6
         0, // N2 = S1
         1, // N3 = S2
@@ -72,8 +77,63 @@ int ArgosLineSensorSVK::mapped(uint8_t sensor) {
     };
 
     if(sensor > 7) {
+
         return 0;
     }
 
     return _raw[ mapTable[sensor] ];
+}
+
+void ArgosLineSensorSVK::calibrate(uint32_t duration) {
+
+    for(int i = 0; i < 8; i++) {
+
+        _min[i] = 4095;
+
+        _max[i] = 0;
+    }
+
+    uint32_t startTime = millis();
+
+    while(millis() - startTime < duration) {
+
+        read();
+
+        for(int i = 0; i < 8; i++) {
+
+            int value = mapped(i);
+
+            if(value < _min[i]) {
+
+                _min[i] = value;
+            }
+
+            if(value > _max[i]) {
+
+                _max[i] = value;
+            }
+        }
+
+        delay(5);
+    }
+}
+
+int ArgosLineSensorSVK::minimum(uint8_t sensor) {
+
+    if(sensor > 7) {
+
+        return 0;
+    }
+
+    return _min[sensor];
+}
+
+int ArgosLineSensorSVK::maximum(uint8_t sensor) {
+
+    if(sensor > 7) {
+
+        return 0;
+    }
+
+    return _max[sensor];
 }

@@ -19,7 +19,18 @@ public:
     void read();
 
     int raw(uint8_t sensor);
+
     int mapped(uint8_t sensor);
+
+    // ==========================
+    // V0.3
+    // ==========================
+
+    void calibrate(uint32_t duration = 5000);
+
+    int minimum(uint8_t sensor);
+
+    int maximum(uint8_t sensor);
 
 private:
 
@@ -29,6 +40,13 @@ private:
     uint8_t _sensorOut;
 
     int _raw[8];
+
+    // ==========================
+    // V0.3
+    // ==========================
+
+    int _min[8];
+    int _max[8];
 
     void selectSensor(uint8_t channel);
 };
