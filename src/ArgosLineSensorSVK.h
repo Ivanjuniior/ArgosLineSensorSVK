@@ -43,6 +43,8 @@ public:
     bool isLineDetected();
 
     bool isLost();
+    
+    bool isCentered(int tolerance = 200);
 
 private:
 

@@ -330,3 +330,15 @@ bool ArgosLineSensorSVK::isLost() {
 
     return !isLineDetected();
 }
+
+bool ArgosLineSensorSVK::isCentered(int tolerance) {
+
+    if(!_calibrated) {
+
+        return false;
+    }
+
+    long pos = position();
+
+    return abs(pos - 3500) <= tolerance;
+}

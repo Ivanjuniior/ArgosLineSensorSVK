@@ -1,0 +1,36 @@
+#include <ArgosLineSensorSVK.h>
+
+ArgosLineSensorSVK sensor;
+
+void setup() {
+
+    Serial.begin(115200);
+
+    sensor.begin(
+        32,
+        33,
+        25,
+        35
+    );
+
+    if(!sensor.loadCalibration()) {
+
+        sensor.calibrate(5000);
+
+        sensor.saveCalibration();
+    }
+}
+
+void loop() {
+
+    sensor.read();
+
+    Serial.print("POS: ");
+    Serial.print(sensor.position());
+
+    Serial.print(" | CENTERED: ");
+
+    Serial.println(sensor.isCentered());
+
+    delay(100);
+}
