@@ -42,6 +42,8 @@ public:
 
     bool isLineDetected();
 
+    bool isLost();
+
 private:
 
     uint8_t _muxA;

@@ -78,15 +78,14 @@ Functions:
 
 ## V0.7 - Line Detection
 
-* [ ] Detect line presence
-* [ ] `isLineDetected()`
+* [x] Detect line presence
+* [x] `isLineDetected()`
 
 ---
 
 ## V0.8 - Calibration Status
 
-* [ ] Calibration validation
-* [ ] `isCalibrated()`
+* [X] isLost()
 
 ---
 

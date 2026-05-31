@@ -323,5 +323,10 @@ bool ArgosLineSensorSVK::isLineDetected() {
         total += normalized(i);
     }
 
-    return total > 100;
+    return total > 200;
+}
+
+bool ArgosLineSensorSVK::isLost() {
+
+    return !isLineDetected();
 }

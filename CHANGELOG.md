@@ -1,5 +1,11 @@
 # Changelog
 
+## V0.8
+- Added isLost()
+
+## V0.7
+- Added isLineDetected()
+
 ## V0.6
 - Calibration persistence
 
