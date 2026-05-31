@@ -32,6 +32,14 @@ public:
 
     long position();
 
+    bool saveCalibration();
+
+    bool loadCalibration();
+
+    bool clearCalibration();
+
+    bool isCalibrated();
+
 private:
 
     uint8_t _muxA;
@@ -45,6 +53,8 @@ private:
     int _max[8];
 
     long _lastPosition;
+
+    bool _calibrated;
 
     void selectSensor(uint8_t channel);
 };

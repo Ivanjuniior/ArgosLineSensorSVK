@@ -1,4 +1,7 @@
 #include "ArgosLineSensorSVK.h"
+#include <Preferences.h>
+
+Preferences prefs;
 
 ArgosLineSensorSVK::ArgosLineSensorSVK() {
 
@@ -12,6 +15,8 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
     }
 
     _lastPosition = 3500;
+
+    _calibrated = false;
 }
 
 void ArgosLineSensorSVK::begin(
@@ -118,6 +123,8 @@ void ArgosLineSensorSVK::calibrate(uint32_t duration) {
 
         delay(5);
     }
+
+    _calibrated = true;
 }
 
 int ArgosLineSensorSVK::minimum(uint8_t sensor) {
@@ -200,4 +207,82 @@ long ArgosLineSensorSVK::position() {
     _lastPosition = pos;
 
     return pos;
+}
+
+bool ArgosLineSensorSVK::saveCalibration() {
+
+    if(!_calibrated) {
+
+        return false;
+    }
+
+    prefs.begin("argosline", false);
+
+    for(int i = 0; i < 8; i++) {
+
+        char keyMin[10];
+        char keyMax[10];
+
+        sprintf(keyMin, "min%d", i);
+        sprintf(keyMax, "max%d", i);
+
+        prefs.putInt(keyMin, _min[i]);
+        prefs.putInt(keyMax, _max[i]);
+    }
+
+    prefs.putBool("valid", true);
+
+    prefs.end();
+
+    return true;
+}
+
+bool ArgosLineSensorSVK::loadCalibration() {
+
+    prefs.begin("argosline", true);
+
+    bool valid = prefs.getBool("valid", false);
+
+    if(!valid) {
+
+        prefs.end();
+
+        return false;
+    }
+
+    for(int i = 0; i < 8; i++) {
+
+        char keyMin[10];
+        char keyMax[10];
+
+        sprintf(keyMin, "min%d", i);
+        sprintf(keyMax, "max%d", i);
+
+        _min[i] = prefs.getInt(keyMin, 0);
+        _max[i] = prefs.getInt(keyMax, 0);
+    }
+
+    prefs.end();
+
+    _calibrated = true;
+
+    return true;
+}
+
+bool ArgosLineSensorSVK::clearCalibration() {
+
+    prefs.begin("argosline", false);
+
+    prefs.clear();
+
+    prefs.end();
+
+    _calibrated = false;
+
+    return true;
+}
+
+bool ArgosLineSensorSVK::isCalibrated() {
+
+    return _calibrated;
 }
