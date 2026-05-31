@@ -1,7 +1,7 @@
 # Changelog
 
 ## V0.6
-- Added calibration: Save,Load and Factory reset()
+- Calibration persistence
 
 ## V0.5
 - Added position()

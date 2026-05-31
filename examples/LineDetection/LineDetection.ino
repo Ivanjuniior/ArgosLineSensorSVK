@@ -12,19 +12,22 @@ void setup() {
         25,
         35
     );
+
+    if(!sensor.loadCalibration()) {
+
+        sensor.calibrate(5000);
+
+        sensor.saveCalibration();
+    }
 }
 
 void loop() {
 
     sensor.read();
 
-    for(int i = 0; i < 8; i++) {
+    Serial.print("LINE: ");
 
-        Serial.print(sensor.raw(i));
-        Serial.print(" ");
-    }
-
-    Serial.println();
+    Serial.println(sensor.isLineDetected());
 
     delay(100);
 }

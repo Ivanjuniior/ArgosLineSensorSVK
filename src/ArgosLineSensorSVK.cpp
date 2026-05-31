@@ -1,7 +1,7 @@
 #include "ArgosLineSensorSVK.h"
 #include <Preferences.h>
 
-Preferences prefs;
+static Preferences prefs;
 
 ArgosLineSensorSVK::ArgosLineSensorSVK() {
 
@@ -73,14 +73,14 @@ int ArgosLineSensorSVK::mapped(uint8_t sensor) {
 
     static const uint8_t mapTable[8] = {
 
-        5, // N1 = S6
-        0, // N2 = S1
-        1, // N3 = S2
-        4, // N4 = S5
-        2, // N5 = S3
-        6, // N6 = S7
-        7, // N7 = S8
-        3  // N8 = S4
+        5,
+        0,
+        1,
+        4,
+        2,
+        6,
+        7,
+        3
     };
 
     if(sensor > 7) {
@@ -88,7 +88,7 @@ int ArgosLineSensorSVK::mapped(uint8_t sensor) {
         return 0;
     }
 
-    return _raw[ mapTable[sensor] ];
+    return _raw[mapTable[sensor]];
 }
 
 void ArgosLineSensorSVK::calibrate(uint32_t duration) {
@@ -150,6 +150,11 @@ int ArgosLineSensorSVK::maximum(uint8_t sensor) {
 int ArgosLineSensorSVK::normalized(uint8_t sensor) {
 
     if(sensor > 7) {
+
+        return 0;
+    }
+
+    if(!_calibrated) {
 
         return 0;
     }
@@ -247,6 +252,8 @@ bool ArgosLineSensorSVK::loadCalibration() {
 
         prefs.end();
 
+        _calibrated = false;
+
         return false;
     }
 
@@ -260,6 +267,15 @@ bool ArgosLineSensorSVK::loadCalibration() {
 
         _min[i] = prefs.getInt(keyMin, 0);
         _max[i] = prefs.getInt(keyMax, 0);
+
+        if(_max[i] <= _min[i]) {
+
+            prefs.end();
+
+            _calibrated = false;
+
+            return false;
+        }
     }
 
     prefs.end();
@@ -277,6 +293,12 @@ bool ArgosLineSensorSVK::clearCalibration() {
 
     prefs.end();
 
+    for(int i = 0; i < 8; i++) {
+
+        _min[i] = 4095;
+        _max[i] = 0;
+    }
+
     _calibrated = false;
 
     return true;
@@ -285,4 +307,21 @@ bool ArgosLineSensorSVK::clearCalibration() {
 bool ArgosLineSensorSVK::isCalibrated() {
 
     return _calibrated;
+}
+
+bool ArgosLineSensorSVK::isLineDetected() {
+
+    if(!_calibrated) {
+
+        return false;
+    }
+
+    long total = 0;
+
+    for(int i = 0; i < 8; i++) {
+
+        total += normalized(i);
+    }
+
+    return total > 100;
 }

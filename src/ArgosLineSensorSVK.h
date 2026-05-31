@@ -40,6 +40,8 @@ public:
 
     bool isCalibrated();
 
+    bool isLineDetected();
+
 private:
 
     uint8_t _muxA;
