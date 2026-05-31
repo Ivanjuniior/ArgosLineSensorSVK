@@ -8,22 +8,26 @@ Developed for the ARGOS robotics platform.
 
 * Raw sensor reading
 * Sensor remapping
-* Automatic calibration
+* Calibration
+* Persistent calibration (ESP32 Preferences)
 * Normalized values (0-1000)
 * Line position detection
+* Line detection
+* Lost line detection
+* Center detection
 * ESP32 compatible
 
 ---
 
 ## Installation
 
-Clone the repository into your Arduino libraries folder:
+Clone the repository:
 
 ```bash
 git clone https://github.com/Ivanjuniior/ArgosLineSensorSVK.git
 ```
 
-Or copy the folder to:
+Or copy the folder into:
 
 ```text
 Arduino/libraries/
@@ -31,9 +35,7 @@ Arduino/libraries/
 
 ---
 
-## Hardware
-
-Sensor pins:
+## Hardware Configuration
 
 ```cpp
 sensor.begin(
@@ -44,19 +46,19 @@ sensor.begin(
 );
 ```
 
-The pin assignment is configurable and may be changed according to your project.
+Pin assignments are fully configurable.
 
 ---
 
 ## Physical Sensor Layout
 
-Physical order:
+Physical sensor order:
 
 ```text
 S6 S1 S2 S5 S3 S7 S8 S4
 ```
 
-Logical order:
+Logical library order:
 
 ```text
 N1 N2 N3 N4 N5 N6 N7 N8
@@ -64,7 +66,7 @@ N1 N2 N3 N4 N5 N6 N7 N8
 
 ---
 
-## Basic Example
+## Quick Start
 
 ```cpp
 #include <ArgosLineSensorSVK.h>
@@ -82,7 +84,12 @@ void setup() {
         35
     );
 
-    sensor.calibrate(5000);
+    if(!sensor.loadCalibration()) {
+
+        sensor.calibrate(5000);
+
+        sensor.saveCalibration();
+    }
 }
 
 void loop() {
@@ -100,14 +107,14 @@ void loop() {
 ## Position Reference
 
 ```text
-7000  -> Left
-3500  -> Center
-0     -> Right
+7000 -> Left
+3500 -> Center
+0    -> Right
 ```
 
 ---
 
-## Current API
+## Available Functions
 
 ```cpp
 begin()
@@ -127,15 +134,44 @@ maximum()
 normalized()
 
 position()
+
+saveCalibration()
+
+loadCalibration()
+
+clearCalibration()
+
+isCalibrated()
+
+isLineDetected()
+
+isLost()
+
+isCentered()
 ```
 
 ---
 
-## Development Status
+## Included Examples
 
-Current Version: V0.5
+```text
+RawRead
+MapValidation
+Calibration
+AutoCalibration
+NormalizedRead
+PositionRead
+LineDetection
+LostDetection
+CenteredDetection
+PIDLineFollower
+```
 
-See ROADMAP.md for upcoming features.
+---
+
+## Version
+
+Current Version: V1.0.0
 
 ---
 
@@ -143,4 +179,4 @@ See ROADMAP.md for upcoming features.
 
 MIT License
 
-Copyright (c) Ivan Junior
+Copyright (c) 2026 Ivan Junior

@@ -1,0 +1,22 @@
+ArgosLineSensorSVK	KEYWORD1
+
+begin	KEYWORD2
+read	KEYWORD2
+raw	KEYWORD2
+mapped	KEYWORD2
+
+calibrate	KEYWORD2
+minimum	KEYWORD2
+maximum	KEYWORD2
+
+normalized	KEYWORD2
+position	KEYWORD2
+
+saveCalibration	KEYWORD2
+loadCalibration	KEYWORD2
+clearCalibration	KEYWORD2
+isCalibrated	KEYWORD2
+
+isLineDetected	KEYWORD2
+isLost	KEYWORD2
+isCentered	KEYWORD2

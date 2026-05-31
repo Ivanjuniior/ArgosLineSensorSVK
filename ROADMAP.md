@@ -91,15 +91,27 @@ Functions:
 
 ## V0.9 - Lost Line Detection
 
-* [ ] Lost line detection
-* [ ] `isLost()`
+* [x] Lost line detection
+* [x] `isLost()`
 
 ---
 
 ## V1.0
 
-* [ ] Stable API
-* [ ] Complete examples
-* [ ] PID line follower example
-* [ ] Documentation
-* [ ] Arduino Library Manager preparation
+* [x] Stable API
+* [x] Complete examples
+* [x] PID line follower example
+* [x] Documentation
+* [x] Arduino Library Manager preparation
+
+## V1.1
+- Adjustable line detection threshold
+
+## V1.2
+- Configurable center position
+
+## V1.3
+- Automatic recalibration
+
+## V1.4
+- Noise filtering

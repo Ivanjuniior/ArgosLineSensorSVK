@@ -1,5 +1,11 @@
 # Changelog
 
+## V1.0.0
+- Initial stable release
+
+## V0.9
+- Added isCentered()
+
 ## V0.8
 - Added isLost()
 
