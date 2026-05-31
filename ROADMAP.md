@@ -104,14 +104,14 @@ Functions:
 * [x] Documentation
 * [x] Arduino Library Manager preparation
 
+---
+
 ## V1.1
-- Adjustable line detection threshold
+[x] Noise filtering
 
-## V1.2
-- Configurable center position
+---
 
-## V1.3
-- Automatic recalibration
+V1.2
+[x] Adjustable line detection threshold
 
-## V1.4
-- Noise filtering
+---

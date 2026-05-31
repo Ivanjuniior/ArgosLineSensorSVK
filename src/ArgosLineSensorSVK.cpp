@@ -17,6 +17,10 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
     _lastPosition = 3500;
 
     _calibrated = false;
+
+    _samples = 5;
+
+    _lineThreshold = 100;
 }
 
 void ArgosLineSensorSVK::begin(
@@ -55,10 +59,16 @@ void ArgosLineSensorSVK::read() {
 
         delayMicroseconds(50);
 
-        _raw[i] = analogRead(_sensorOut);
+        long sum = 0;
+
+        for(uint8_t s = 0; s < _samples; s++) {
+
+            sum += analogRead(_sensorOut);
+        }
+
+        _raw[i] = sum / _samples;
     }
 }
-
 int ArgosLineSensorSVK::raw(uint8_t sensor) {
 
     if(sensor > 7) {
@@ -323,7 +333,7 @@ bool ArgosLineSensorSVK::isLineDetected() {
         total += normalized(i);
     }
 
-    return total > 200;
+    return total > _lineThreshold;
 }
 
 bool ArgosLineSensorSVK::isLost() {
@@ -341,4 +351,34 @@ bool ArgosLineSensorSVK::isCentered(int tolerance) {
     long pos = position();
 
     return abs(pos - 3500) <= tolerance;
+}
+
+void ArgosLineSensorSVK::setSamples(uint8_t samples) {
+
+    if(samples < 1) {
+
+        samples = 1;
+    }
+
+    _samples = samples;
+}
+
+uint8_t ArgosLineSensorSVK::samples() {
+
+    return _samples;
+}
+
+void ArgosLineSensorSVK::setLineThreshold(int threshold) {
+
+    if(threshold < 1) {
+
+        threshold = 1;
+    }
+
+    _lineThreshold = threshold;
+}
+
+int ArgosLineSensorSVK::lineThreshold() {
+
+    return _lineThreshold;
 }
