@@ -1,117 +1,129 @@
-# ArgosLineSensorSVK Roadmap
+# Roadmap
 
-## V0.1 - Raw Reading
+## V0.1.0
 
-* [x] ESP32 support
-* [x] Multiplexer control
-* [x] Raw sensor reading
-* [x] `begin()`
-* [x] `read()`
-* [x] `raw()`
+[x] ESP32 support
 
----
+[x] Multiplexer control
 
-## V0.2 - Sensor Mapping
+[x] Raw sensor reading
 
-* [x] Physical sensor remapping
-* [x] `mapped()`
+[x] begin()
 
-Physical sensor order:
+[x] read()
 
-S6 S1 S2 S5 S3 S7 S8 S4
-
-Logical order:
-
-N1 N2 N3 N4 N5 N6 N7 N8
+[x] raw()
 
 ---
 
-## V0.3 - Calibration
+## V0.2.0
 
-* [x] Calibration routine
-* [x] `calibrate()`
-* [x] `minimum()`
-* [x] `maximum()`
+[x] Physical sensor remapping
 
----
-
-## V0.4 - Normalized Reading
-
-* [x] Sensor normalization
-* [x] `normalized()`
-* [x] Range 0-1000
-
-Where:
-
-* 0 = White
-* 1000 = Black
+[x] mapped()
 
 ---
 
-## V0.5 - Position Detection
+## V0.3.0
 
-* [x] Weighted position calculation
-* [x] Last valid position memory
-* [x] `position()`
+[x] Calibration routine
 
-Position range:
+[x] calibrate()
 
-* 0 = Right side
-* 3500 = Center
-* 7000 = Left side
+[x] minimum()
+
+[x] maximum()
 
 ---
 
-## V0.6 - EEPROM Support
+## V0.4.0
 
-* [x] Save calibration data
-* [x] Load calibration data
-* [x] Factory reset calibration
+[x] Sensor normalization
 
-Functions:
+[x] normalized()
 
-* `saveCalibration()`
-* `loadCalibration()`
-* `clearCalibration()`
+[x] Range 0-1000
 
 ---
 
-## V0.7 - Line Detection
+## V0.5.0
 
-* [x] Detect line presence
-* [x] `isLineDetected()`
+[x] Weighted position calculation
 
----
+[x] Last valid position memory
 
-## V0.8 - Calibration Status
-
-* [X] isLost()
+[x] position()
 
 ---
 
-## V0.9 - Lost Line Detection
+## V0.6.0
 
-* [x] Lost line detection
-* [x] `isLost()`
+[x] Save calibration data
 
----
+[x] Load calibration data
 
-## V1.0
-
-* [x] Stable API
-* [x] Complete examples
-* [x] PID line follower example
-* [x] Documentation
-* [x] Arduino Library Manager preparation
+[x] Factory reset calibration
 
 ---
 
-## V1.1
-[x] Noise filtering
+## V0.7.0
+
+[x] Line detection
+
+[x] isLineDetected()
 
 ---
 
-V1.2
-[x] Adjustable line detection threshold
+## V0.8.0
+
+[x] Lost line detection
+
+[x] isLost()
 
 ---
+
+## V0.9.0
+
+[x] Center detection
+
+[x] isCentered()
+
+---
+
+## V1.0.0
+
+[x] Stable API
+
+[x] Documentation
+
+[x] Complete examples
+
+[x] PID line follower example
+
+[x] Arduino Library Manager preparation
+
+---
+
+## V1.1.0
+
+[ ] Noise filtering
+
+## V1.2.0
+
+[ ] Adjustable line detection threshold
+
+## V1.3.0
+
+[ ] Dynamic calibration
+
+[ ] Adaptive sensor weighting
+
+## V2.0.0
+
+[ ] Advanced line tracking platform
+
+[ ] Multi-line detection
+
+[ ] Intersection detection
+
+[ ] Route selection support

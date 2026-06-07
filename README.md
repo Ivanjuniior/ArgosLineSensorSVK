@@ -169,6 +169,37 @@ PIDLineFollower
 
 ---
 
+## Tested Hardware
+
+- ESP32 DevKit V1
+- SVK 8-Channel Line Sensor
+- TB6612FNG
+- N20 Encoder Motors
+
+---
+
+## Roadmap
+
+### V1.1.0
+
+- Noise filtering
+
+### V1.2.0
+
+- Adjustable line detection threshold
+
+### V1.3.0
+
+- Dynamic calibration
+
+### V2.0.0
+
+- Advanced line tracking platform
+- Multi-line detection
+- Intersection detection
+
+---
+
 ## Version
 
 Current Version: V1.0.0
@@ -178,5 +209,3 @@ Current Version: V1.0.0
 ## License
 
 MIT License
-
-Copyright (c) 2026 Ivan Junior
