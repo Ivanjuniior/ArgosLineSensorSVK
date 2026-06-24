@@ -16,7 +16,7 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
         _max[i] = 0;
     }
 
-    _lastPosition = 4145;
+    _lastPosition = CENTER_POSITION;
 
     _calibrated = false;
 
@@ -228,7 +228,7 @@ long ArgosLineSensorSVK::position() {
 
 int ArgosLineSensorSVK::centerPosition() {
 
-    return 4145;
+    return CENTER_POSITION;
 }
 
 bool ArgosLineSensorSVK::saveCalibration() {
@@ -357,7 +357,7 @@ bool ArgosLineSensorSVK::isCentered(int tolerance) {
 
     long pos = position();
 
-    return abs(pos - 4145) <= tolerance;
+    return abs(pos - CENTER_POSITION) <= tolerance;
 }
 
 void ArgosLineSensorSVK::setSamples(uint8_t samples) {

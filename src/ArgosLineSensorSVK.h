@@ -8,6 +8,8 @@ class ArgosLineSensorSVK {
 
 public:
 
+    static constexpr int CENTER_POSITION = 4145;
+
     ArgosLineSensorSVK();
 
     void begin(
@@ -64,6 +66,8 @@ public:
     void setLineThreshold(int threshold);
 
     int lineThreshold();
+
+    
     
 bool autoCalibrate(
     ArgosTB6612& motor
