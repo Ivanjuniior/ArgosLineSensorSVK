@@ -1,5 +1,6 @@
 #ifndef ARGOS_LINE_SENSOR_SVK_H
 #define ARGOS_LINE_SENSOR_SVK_H
+#include <ArgosTB6612.h>
 
 #include <Arduino.h>
 
@@ -32,6 +33,8 @@ public:
 
     long position();
 
+    int centerPosition();
+
     bool saveCalibration();
 
     bool loadCalibration();
@@ -61,6 +64,10 @@ public:
     void setLineThreshold(int threshold);
 
     int lineThreshold();
+    
+bool autoCalibrate(
+    ArgosTB6612& motor
+);
 
 private:
 

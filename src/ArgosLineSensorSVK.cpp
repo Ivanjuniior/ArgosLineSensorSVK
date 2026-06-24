@@ -1,6 +1,8 @@
 #include "ArgosLineSensorSVK.h"
 #include <Preferences.h>
-
+static constexpr uint16_t CAL_LEFT_TIME  = 400;
+static constexpr uint16_t CAL_RIGHT_TIME = 800;
+static constexpr int CAL_SPEED = 100;
 static Preferences prefs;
 
 ArgosLineSensorSVK::ArgosLineSensorSVK() {
@@ -14,7 +16,7 @@ ArgosLineSensorSVK::ArgosLineSensorSVK() {
         _max[i] = 0;
     }
 
-    _lastPosition = 3500;
+    _lastPosition = 4145;
 
     _calibrated = false;
 
@@ -224,6 +226,11 @@ long ArgosLineSensorSVK::position() {
     return pos;
 }
 
+int ArgosLineSensorSVK::centerPosition() {
+
+    return 4145;
+}
+
 bool ArgosLineSensorSVK::saveCalibration() {
 
     if(!_calibrated) {
@@ -350,7 +357,7 @@ bool ArgosLineSensorSVK::isCentered(int tolerance) {
 
     long pos = position();
 
-    return abs(pos - 3500) <= tolerance;
+    return abs(pos - 4145) <= tolerance;
 }
 
 void ArgosLineSensorSVK::setSamples(uint8_t samples) {
@@ -381,4 +388,139 @@ void ArgosLineSensorSVK::setLineThreshold(int threshold) {
 int ArgosLineSensorSVK::lineThreshold() {
 
     return _lineThreshold;
+}
+
+bool ArgosLineSensorSVK::autoCalibrate(
+    ArgosTB6612& motor
+) {
+
+    for(int i = 0; i < 8; i++) {
+
+        _min[i] = 4095;
+        _max[i] = 0;
+    }
+
+    Serial.println("CALIBRATION START");
+
+    uint32_t t;
+
+    // esquerda 400ms
+
+motor.drive(
+    CAL_SPEED,
+   -CAL_SPEED
+);
+
+    t = millis();
+
+    while(
+        millis() - t < CAL_LEFT_TIME
+    ) {
+
+        read();
+
+        for(int i = 0; i < 8; i++) {
+
+            int value = mapped(i);
+
+            if(value < _min[i]) {
+                _min[i] = value;
+            }
+
+            if(value > _max[i]) {
+                _max[i] = value;
+            }
+        }
+
+        yield();
+        delay(5);
+    }
+
+    // direita 800ms
+
+motor.drive(
+   -CAL_SPEED,
+    CAL_SPEED
+);
+
+    t = millis();
+
+    while(
+        millis() - t < CAL_RIGHT_TIME
+    ) {
+
+        read();
+
+        for(int i = 0; i < 8; i++) {
+
+            int value = mapped(i);
+
+            if(value < _min[i]) {
+                _min[i] = value;
+            }
+
+            if(value > _max[i]) {
+                _max[i] = value;
+            }
+        }
+
+        yield();
+        delay(5);
+    }
+
+    // esquerda 400ms
+
+motor.drive(
+    CAL_SPEED,
+   -CAL_SPEED
+);
+
+    t = millis();
+
+    while(
+        millis() - t < CAL_LEFT_TIME
+    ) {
+
+        read();
+
+        for(int i = 0; i < 8; i++) {
+
+            int value = mapped(i);
+
+            if(value < _min[i]) {
+                _min[i] = value;
+            }
+
+            if(value > _max[i]) {
+                _max[i] = value;
+            }
+        }
+
+        yield();
+        delay(5);
+    }
+
+    motor.stop();
+
+    _calibrated = true;
+
+    saveCalibration();
+
+    Serial.println();
+
+    for(int i = 0; i < 8; i++) {
+
+        Serial.print("S");
+        Serial.print(i);
+
+        Serial.print(" MIN=");
+        Serial.print(_min[i]);
+
+        Serial.print(" MAX=");
+        Serial.println(_max[i]);
+    }
+
+    Serial.println("CALIBRATION DONE");
+
+    return true;
 }
